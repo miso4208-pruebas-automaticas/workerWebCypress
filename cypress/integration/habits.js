@@ -1,6 +1,6 @@
 describe('Habitica testing', function() {
     it('Visits habitica and add a Habit', function() {
-      cy.visit('http://localhost:8080/static/home')
+      cy.visit('http://www.habitica.com/static/home')
       //cy.contains('Ingresar').click()
       cy.get('a[href="/login"]').click()
       cy.get('#login-form').find('input[id="usernameInput"]').click().type("fakeUser1@fake.com")
@@ -16,7 +16,7 @@ describe('Habitica testing', function() {
       }
     })
     it('Visits habitica and edit a habit', function() {
-      cy.visit('http://localhost:8080/static/home')
+      cy.visit('http://www.habitica.com/static/home')
       //cy.contains('Ingresar').click()
       cy.get('a[href="/login"]').click()
       cy.get('#login-form').find('input[id="usernameInput"]').click().type("fakeUser1@fake.com")
@@ -31,7 +31,7 @@ describe('Habitica testing', function() {
       }
     })
     it('Visits habitica and delete a habit', function() {
-      cy.visit('http://localhost:8080/static/home')
+      cy.visit('http://www.habitica.com/static/home')
       cy.get('a[href="/login"]').click()
       cy.get('#login-form').find('input[id="usernameInput"]').click().type("fakeUser1@fake.com")
       cy.get('#login-form').find('input[id="passwordInput"]').click().type("pruebas201902")

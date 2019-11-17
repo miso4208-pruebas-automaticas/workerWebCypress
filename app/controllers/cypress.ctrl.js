@@ -1,21 +1,29 @@
 'use strict'
 var express = require('express')
 var router = express.Router();
-var cypressService = require('../services/cypress.srv.js');
 var http = require('http');
 
-router.get('/cypress',function(req,res){
-    
-    cypressService.generateCypress(function(apps){
-        res.statusCode = 200;
-        res.send({ status: "OK" });
-    },function(err){
-        res.statusCode = 404;
-        res.send(err);
+var cron = require('node-cron'); // CAMBIO:ADICIONAR DEPENDENCIA
+var sqs = require('../../worker-sqs/sqs.js') //CAMBIO: ADICIONAR DEPENDENCIA
 
-    })
+const execute = () => {
+    sqs.getSqs(function(apps){
+        console.log("Ejecucion Cypress test");
+    });
+}
 
-    return res;
+var task = cron.schedule('3 * * * *', execute, {scheduled:true});
+
+router.get('/start', (req,res) => {
+    execute();
+    task.start();
+    res.send('Cron iniciado')
+
+});
+
+router.get('/stop', (req,res) => {
+    task.stop()
+    res.send('Worker detenido')
 });
 
 module.exports = router;

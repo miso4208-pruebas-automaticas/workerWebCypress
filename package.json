@@ -24,6 +24,11 @@
   "dependencies": {
     "mocha": "^5.2.0",
     "mochawesome": "^4.1.0",
-    "mochawesome-merge": "^2.0.1"
+    "mochawesome-merge": "^2.0.1",
+    "mysql": "^2.17.1",
+    "node-cron": "^2.0.3",
+    "uuid": "^3.3.3",
+    "fs": "0.0.1-security",
+    "aws-sdk": "^2.568.0"
   }
 }

@@ -12,7 +12,7 @@ const execute = () => {
     });
 }
 
-var task = cron.schedule('3 * * * *', execute, {scheduled:true});
+var task = cron.schedule('5 * * * *', execute, {scheduled:true});
 
 router.get('/start', (req,res) => {
     execute();

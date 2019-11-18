@@ -30,8 +30,7 @@ module.exports.generateCypress = function(req,success,error){
                         if(item == itemsEx){
                             success("ok");
                         }else{
-                        item = item+1;
-                        resolve();
+                            item = item+1;
                         }
                     });
                 });

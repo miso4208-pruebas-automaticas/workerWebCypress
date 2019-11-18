@@ -17,7 +17,7 @@ module.exports.getSqs = function(req,success,error){
         'All'
       ],
       QueueUrl: sqsUrl,
-      VisibilityTimeout: 20,
+      VisibilityTimeout: 300,
       WaitTimeSeconds: 20
     };
 
@@ -27,7 +27,7 @@ module.exports.getSqs = function(req,success,error){
       } else if (data.Messages) {
           console.log(data.Messages[0])
         let payload = JSON.parse(data.Messages[0].Body);
-
+        console.log('valor del payload: ', payload)
         executeService(payload,() => {
             console.log('ok test');
             sqsComplete(data.Messages[0].ReceiptHandle,payload.code);

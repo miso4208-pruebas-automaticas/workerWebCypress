@@ -36,11 +36,11 @@ describe('Habitica testing', function() {
       cy.get('#login-form').find('input[id="usernameInput"]').click().type("fakeUser1@fake.com")
       cy.get('#login-form').find('input[id="passwordInput"]').click().type("pruebas201902")
       cy.get('.btn-info').click()
-      if(cy.get('h3').find('p').contains("Habito de pruebas").should('exist')){
-        var tarea= cy.get('div').find('p').contains("Habito de pruebas")
+      if(cy.get('h3').find('p').contains("Habito modificado").should('exist')){
+        var tarea= cy.get('div').find('p').contains("Habito modificado")
         tarea.click()
         cy.get('div').find('span').contains('Delete this Task').click()
-        expect(cy.get('h3').find('p').contains("Habito de pruebas").should('not.exist'))
+        expect(cy.get('h3').find('p').contains("Habito modificado").should('not.exist'))
       }
     })
 })

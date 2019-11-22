@@ -5,13 +5,15 @@ const s3 = require('../../worker-sqs/s3Storage.js')
 
 module.exports.generateCypress = function(req,success,error){
 
-    //shell.exec('npm install');
     let itemsEx = req.numberExecution;
     let path = req.path_project;
     let code = req.code;
     const codeinit = req.code;
     var item = 1;
-    shell.exec('npx cypress run', function(val, stdout, stderr) {
+    for(var i = 0,p = Promise.resolve();i<itemsEx;i++){
+        p= p.then(_ => new Promise(resolve => {
+            code = `${codeinit}_${item}`;
+            shell.exec('npx cypress run', function(val, stdout, stderr) {
                 fs.readdir(`${path}/cypress/report/mochawesome-report`,function(err, items) {
                     let file;
                     for(var i=0;i<items.length;i++){
@@ -31,8 +33,11 @@ module.exports.generateCypress = function(req,success,error){
                             success("ok");
                         }else{
                             item = item+1;
+                            resolve();
                         }
                     });
                 });
-    });
+            });
+        }));
+    }
 }

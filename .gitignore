@@ -49,4 +49,5 @@ Thumbs.db
 /cypress/screenshots
 /cypress/videos
 node_modules
-node_modules
+package-lock.json
+

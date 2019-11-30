@@ -12,7 +12,6 @@ const s3 = new AWS.S3({
 const bucketname= 'reports-cypress-testing' //CAMBIAR POR NOMBRE DE BUCKET DE ACUERDO A TIPO DE PRUEBA
 
 module.exports.saveFileToS3 = (code, file, success) => {
-
   console.log("key: ", code);
   console.log("Bucket name: ", bucketname);
   s3.createBucket({

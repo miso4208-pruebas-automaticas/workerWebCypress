@@ -12,8 +12,13 @@ module.exports.generateCypress = function(req,success,error){
     var item = 1;
     for(var i = 0,p = Promise.resolve();i<itemsEx;i++){
         p= p.then(_ => new Promise(resolve => {
-        code = `${codeinit}_${item}`;
-        requestcall(path,code,req,codeinit).then(()=>{
+        if(itemsEx>1){
+            code = `${codeinit}_${item}`;
+        }else{
+            code = `${codeinit}`;
+        }
+            
+        requestcall(path,code,req,codeinit,itemsEx).then(()=>{
             shell.exec('npx cypress run', function(val, stdout, stderr) {
                         fs.readdir(`${path}/cypress/report/mochawesome-report`,function(err, items) {
                             let file;
@@ -44,21 +49,18 @@ module.exports.generateCypress = function(req,success,error){
     }
 }
 
-function requestcall(path_project,code,req,codeinit) {
+function requestcall(path_project,code,req,codeinit,itemsEx) {
     return new Promise(function(resolve, reject) {
-        //fs.writeFile(`${path_project}/app/data.json`, body, function (err) {
-            let insert = "INSERT INTO `hangover`.`EXECUTION_TESTS` (`code`, `id_application`, `type_application_name`, `level_name`, `type_name`, `type_execution_name`, `number_executions`, `execution_time`, `repetitions`, `status`,`parent`)" 
+            if(itemsEx>1){
+                let insert = "INSERT INTO `hangover`.`EXECUTION_TESTS` (`code`, `id_application`, `type_application_name`, `level_name`, `type_name`, `type_execution_name`, `number_executions`, `execution_time`, `repetitions`, `status`,`parent`)" 
                          +  "VALUES ('" + `${code}` + "', '" + req.aplication + "', '" + req.typeAplication + "', '" + req.level + "', '" + req.type + "', '" + req.subType + "', '" + req.numberExecution + "', '" + req.executionTime + "', '" + req.repetitions + "', '" + req.status + "','" + codeinit + "');";
-            console.log(insert);
-            db.query(insert, (err, result) => {
-                if (err) throw error;
-                resolve("ok");
-                /*s3.saveFileToS3(`${code}_semilla`,body,()=>{ 
-                    console.log('Archivo creado en S3 data : ',`${code}_semilla`);
+                console.log(insert);
+                db.query(insert, (err, result) => {
+                    if (err) throw error;
                     resolve("ok");
-                });*/
-            });
-         
-         //}); 
+                });
+            }else{
+                resolve("ok");
+            }                
     }); 
  }
